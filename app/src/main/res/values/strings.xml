@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TodoAppLab</string>
+    <string name="add_todo">Add todo</string>
 </resources>
