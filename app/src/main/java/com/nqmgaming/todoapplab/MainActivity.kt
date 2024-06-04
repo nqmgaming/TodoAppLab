@@ -18,7 +18,7 @@ import com.nqmgaming.todoapplab.presentation.Screen
 import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreen
 import com.nqmgaming.todoapplab.presentation.edit_todo.EditTodoScreen
 import com.nqmgaming.todoapplab.presentation.home.HomeScreen
-import com.nqmgaming.todoapplab.ui.theme.TodoAppLabTheme
+import com.nqmgaming.todoapplab.presentation.theme.TodoAppLabTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

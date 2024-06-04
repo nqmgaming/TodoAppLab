@@ -1,4 +1,4 @@
-package com.nqmgaming.todoapplab.ui.theme
+package com.nqmgaming.todoapplab.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
