@@ -14,18 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class IoDispatcher
-
 @Module
 @InstallIn(SingletonComponent::class)
 object TodoModule {
-
-    @Singleton
-    @Provides
-    @IoDispatcher
-    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
     fun providesRoomDao(database: TodoDatabase): TodoDao {
