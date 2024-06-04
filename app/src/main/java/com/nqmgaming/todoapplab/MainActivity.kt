@@ -11,6 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.nqmgaming.todoapplab.presentation.Screen
+import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreen
+import com.nqmgaming.todoapplab.presentation.edit_todo.EditTodoScreen
+import com.nqmgaming.todoapplab.presentation.home.HomeScreen
 import com.nqmgaming.todoapplab.ui.theme.TodoAppLabTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,29 +28,25 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TodoAppLabTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.HomeScreen.route,
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) {
+                        composable(Screen.HomeScreen.route) {
+                            HomeScreen(navController)
+                        }
+                        composable(Screen.AddTodoScreen.route) {
+                            AddTodoScreen(navController)
+                        }
+                        composable(Screen.EditTodoScreen.route) {
+                            EditTodoScreen(navController)
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TodoAppLabTheme {
-        Greeting("Android")
     }
 }
