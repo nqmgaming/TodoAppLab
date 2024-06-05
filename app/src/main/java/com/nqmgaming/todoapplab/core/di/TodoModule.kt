@@ -2,6 +2,7 @@ package com.nqmgaming.todoapplab.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.nqmgaming.todoapplab.data.local.MigrationDb.MIGRATION_1_2
 import com.nqmgaming.todoapplab.data.local.TodoDao
 import com.nqmgaming.todoapplab.data.local.TodoDatabase
 import dagger.Module
@@ -27,6 +28,8 @@ object TodoModule {
             context.applicationContext,
             TodoDatabase::class.java,
             TodoDatabase.DATABASE_NAME
-        ).fallbackToDestructiveMigration().build()
+        ).addMigrations(
+            MIGRATION_1_2
+        ).build()
     }
 }
