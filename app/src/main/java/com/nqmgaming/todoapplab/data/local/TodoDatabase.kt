@@ -7,7 +7,7 @@ import com.nqmgaming.todoapplab.data.local.converter.DateConverter
 import com.nqmgaming.todoapplab.data.local.converter.PriorityConverter
 import com.nqmgaming.todoapplab.data.local.dto.TodoDto
 
-@Database(entities = [TodoDto::class], version = 1)
+@Database(entities = [TodoDto::class], version = 2)
 @TypeConverters(PriorityConverter::class, DateConverter::class)
 abstract class TodoDatabase : RoomDatabase() {
     abstract val dao: TodoDao

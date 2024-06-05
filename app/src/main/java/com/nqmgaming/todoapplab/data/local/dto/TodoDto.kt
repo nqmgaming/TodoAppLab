@@ -14,5 +14,4 @@ data class TodoDto(
     val dueDate: Date? = null,
     val isCompleted: Boolean = false,
     val priority: Priority = Priority.LOW,
-    val notes: String? = null
 )

@@ -1,5 +1,6 @@
 package com.nqmgaming.todoapplab
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +22,7 @@ import com.nqmgaming.todoapplab.presentation.home.HomeScreen
 import com.nqmgaming.todoapplab.presentation.theme.TodoAppLabTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,17 +31,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             TodoAppLabTheme {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize()) {  innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Screen.HomeScreen.route,
-                        modifier = Modifier.padding(innerPadding)
+//                        modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(Screen.HomeScreen.route) {
                             HomeScreen(navController)
                         }
                         composable(Screen.AddTodoScreen.route) {
-                            AddTodoScreen(navController)
+                            AddTodoScreen(navController = navController)
                         }
                         composable(Screen.EditTodoScreen.route) {
                             EditTodoScreen(navController)
