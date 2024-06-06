@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.nqmgaming.todoapplab.presentation.Screen
 import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreen
 import com.nqmgaming.todoapplab.presentation.edit_todo.EditTodoScreen
@@ -31,19 +33,34 @@ class MainActivity : ComponentActivity() {
         setContent {
             TodoAppLabTheme {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) {  innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize()) {
                     NavHost(
                         navController = navController,
                         startDestination = Screen.HomeScreen.route,
-//                        modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(Screen.HomeScreen.route) {
+                        composable(route = Screen.HomeScreen.route) {
                             HomeScreen(navController)
                         }
-                        composable(Screen.AddTodoScreen.route) {
+                        composable(route = Screen.AddTodoScreen.route + "?todoId={todoId}",
+                            arguments = listOf(
+                                navArgument("todoId")
+                                {
+                                    type = NavType.LongType
+                                    defaultValue = -1
+                                }
+                            )
+                        ) {
                             AddTodoScreen(navController = navController)
                         }
-                        composable(Screen.EditTodoScreen.route) {
+                        composable(route = Screen.EditTodoScreen.route + "?todoId={todoId}",
+                            arguments = listOf(
+                                navArgument("todoId")
+                                {
+                                    type = NavType.LongType
+                                    defaultValue = -1
+                                }
+                            )
+                        ) {
                             EditTodoScreen(navController)
                         }
                     }

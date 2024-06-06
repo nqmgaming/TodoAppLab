@@ -15,9 +15,13 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val todoRepository: TodoRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(HomeScreenState())
+    private val _state = mutableStateOf(HomeScreenState())
     val state get() = _state.value
     private var getTodoItemsJob: Job? = null
+
+    init {
+        getTodos()
+    }
 
     suspend fun onEvent(event: HomeScreenEvent) {
         when (event) {
@@ -30,11 +34,18 @@ class HomeScreenViewModel @Inject constructor(
             }
 
             is HomeScreenEvent.TodoCheckedChanged -> {
-//                todoRepository.updateTodo()
+                todoRepository.updateTodo(todo = event.todo.copy(isCompleted = event.isChecked))
+                getTodos()
             }
 
             is HomeScreenEvent.SearchQueryChanged -> {
                 // search query
+            }
+
+            is HomeScreenEvent.DeleteTodoClicked -> {
+                todoRepository.deleteTodoById(event.todo)
+                getTodos()
+
             }
         }
     }

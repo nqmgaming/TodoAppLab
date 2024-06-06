@@ -4,7 +4,7 @@ import com.nqmgaming.todoapplab.core.common.Priority
 import java.util.Date
 
 data class Todo(
-    val id: Long,
+    val id: Long? = null,
     val title: String,
     val description: String? = null,
     val createdDate: Date = Date(),

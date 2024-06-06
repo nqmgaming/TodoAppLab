@@ -65,7 +65,6 @@ fun AddTodoScreen(
 ) {
 
     val state = viewModel.state
-
     val title = state.title
     val description = state.description
     val priority = state.priority
@@ -193,63 +192,61 @@ fun AddTodoScreen(
                         imeAction = ImeAction.Done
                     )
                 )
-                TextField(
-                    value = if (dueDate.time.toString()
-                            .isNotEmpty()
-                    ) convertMillisToDate(dueDate.time) else "",
-                    onValueChange = {
-                        scope.launch {
-                            viewModel.onEvent(AddTodoScreenEvent.DueDateChanged(dueDate))
-                        }
-                    },
-                    label = {
-                        Text(
-                            text = "Choose date", style = TextStyle(
-                                color = Color.Gray,
-                                fontSize = 16.sp
-                            )
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .clickable {
-                            showDatePicker = true
-                        },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.Black,
-                        focusedContainerColor = Color.Transparent,
-                        disabledTextColor = Color.Black
-                    ),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next
-                    ),
-                    singleLine = true,
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.calendar),
-                            contentDescription = "Calendar Icon",
-                            tint = if (dueDate.time.toString()
-                                    .isNotEmpty()
-                            ) Color.Black else Color.Gray
-                        )
-                    },
-                    enabled = false,
-                )
 
             }
 
-            Box(
+            TextField(
+                value = if (dueDate.time.toString()
+                        .isNotEmpty()
+                ) convertMillisToDate(dueDate.time) else "",
+                onValueChange = {
+                    scope.launch {
+                        viewModel.onEvent(AddTodoScreenEvent.DueDateChanged(dueDate))
+                    }
+                },
+                label = {
+                    Text(
+                        text = "Choose date", style = TextStyle(
+                            color = Color.Gray,
+                            fontSize = 16.sp
+                        )
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(8.dp)
+                    .padding(horizontal = 16.dp)
+                    .clickable {
+                        showDatePicker = true
+                    },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    cursorColor = Color.Black,
+                    focusedContainerColor = Color.Transparent,
+                    disabledTextColor = Color.Black
+                ),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                singleLine = true,
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.calendar),
+                        contentDescription = "Calendar Icon",
+                        tint = if (dueDate.time.toString()
+                                .isNotEmpty()
+                        ) Color.Black else Color.Gray
                     )
+                },
+                enabled = false,
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
                 Column(
                     modifier = Modifier
@@ -279,7 +276,7 @@ fun AddTodoScreen(
                             unfocusedIndicatorColor = Color.Transparent,
                             cursorColor = Color.Black,
                             focusedContainerColor = Color.Transparent,
-                            disabledTextColor = Color.Black
+                            disabledTextColor = MaterialTheme.colorScheme.onSurface
                         ),
                         keyboardOptions = KeyboardOptions.Default.copy(
                             keyboardType = KeyboardType.Text,
@@ -304,9 +301,10 @@ fun AddTodoScreen(
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
                         modifier = Modifier
-                            .width(360.dp)
+                            .padding(horizontal = 16.dp)
+                            .align(alignment = Alignment.CenterHorizontally)
                     ) {
-                        Priority.values().forEach { priority ->
+                        Priority.entries.forEach { priority ->
                             DropdownMenuItem(
                                 onClick = {
                                     scope.launch {

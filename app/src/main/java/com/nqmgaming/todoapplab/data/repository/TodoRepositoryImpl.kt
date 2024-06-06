@@ -78,9 +78,8 @@ class TodoRepositoryImpl @Inject constructor(
 
 
     override suspend fun insertTodo(todo: Todo) {
-        database.withTransaction {
-            dao.insertTodo(todo.toDto())
-        }
+        Log.d(TAG, "insertTodo: $todo")
+        dao.insertTodo(todo.toDto())
     }
 
     override suspend fun updateTodo(todo: Todo) {

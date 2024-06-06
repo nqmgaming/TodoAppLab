@@ -28,8 +28,6 @@ object TodoModule {
             context.applicationContext,
             TodoDatabase::class.java,
             TodoDatabase.DATABASE_NAME
-        ).addMigrations(
-            MIGRATION_1_2
         ).build()
     }
 }

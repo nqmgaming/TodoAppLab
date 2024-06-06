@@ -7,7 +7,7 @@ import java.util.Date
 
 @Entity(tableName = "todos")
 data class TodoDto(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
     val title: String,
     val description: String? = null,
     val createdDate: Date = Date(),
