@@ -10,6 +10,9 @@ TodoAppLab is a task management application built with Kotlin and Android Jetpac
 - Local storage of tasks using SQLite through Room.
 - Task management including adding, editing, and deleting tasks.
 
+## Screenshots
+<img src="./assets/home_empty.png" width="200" height="400" /><img src="./assets/home.png" width="200" height="400" /><img src="./assets/add_todo.png" width="200" height="400" /><img src="./assets/edit_todo.png" width="200" height="400" /><img src="./assets/delete_todo.png" width="200" height="400" />
+
 ## Video Demo
 Link: [Link](https://share.cleanshot.com/YdL4kCJ3)
 

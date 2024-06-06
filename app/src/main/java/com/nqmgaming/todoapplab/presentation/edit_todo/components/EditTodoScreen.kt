@@ -34,6 +34,7 @@ import com.nqmgaming.todoapplab.core.components.TopAppBar
 import com.nqmgaming.todoapplab.core.utils.ConvertMillisToDate.convertMillisToDate
 import com.nqmgaming.todoapplab.presentation.edit_todo.EditTodoScreenEvent
 import com.nqmgaming.todoapplab.presentation.edit_todo.EditTodoScreenViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
@@ -69,7 +70,7 @@ fun EditTodoScreen(
                     navController.navigateUp()
                 },
                 onSaveClick = {
-                    scope.launch {
+                    scope.launch (Dispatchers.Main){
                         keyboard?.hide()
                         viewModel.onEvent(EditTodoScreenEvent.SaveButtonClicked)
                         navController.navigateUp()

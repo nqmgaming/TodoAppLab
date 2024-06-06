@@ -36,6 +36,7 @@ import com.nqmgaming.todoapplab.core.components.TopAppBar
 import com.nqmgaming.todoapplab.core.utils.ConvertMillisToDate.convertMillisToDate
 import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreenEvent
 import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreenViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -70,7 +71,7 @@ fun AddTodoScreen(
                     navController.navigateUp()
                 },
                 onSaveClick = {
-                    scope.launch {
+                    scope.launch(Dispatchers.Main) {
                         keyboard?.hide()
                         viewModel.onEvent(AddTodoScreenEvent.SaveButtonClicked)
                         navController.navigateUp()
