@@ -1,6 +1,6 @@
 package com.nqmgaming.todoapplab.domain.repository
 
-import com.nqmgaming.todoapplab.core.utils.Resources
+import com.nqmgaming.todoapplab.domain.utils.Resources
 import com.nqmgaming.todoapplab.domain.model.Todo
 import kotlinx.coroutines.flow.Flow
 

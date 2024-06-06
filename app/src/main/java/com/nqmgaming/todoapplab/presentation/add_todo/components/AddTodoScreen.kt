@@ -1,36 +1,26 @@
-package com.nqmgaming.todoapplab.presentation.add_todo
+package com.nqmgaming.todoapplab.presentation.add_todo.components
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,23 +30,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nqmgaming.todoapplab.R
 import com.nqmgaming.todoapplab.core.common.Priority
+import com.nqmgaming.todoapplab.core.components.MyDatePickerDialog
+import com.nqmgaming.todoapplab.core.components.TopAppBar
+import com.nqmgaming.todoapplab.core.utils.ConvertMillisToDate.convertMillisToDate
+import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreenEvent
+import com.nqmgaming.todoapplab.presentation.add_todo.AddTodoScreenViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddTodoScreen(
@@ -72,6 +62,8 @@ fun AddTodoScreen(
 
     val scope = rememberCoroutineScope()
 
+    val keyboard = LocalSoftwareKeyboardController.current
+
     var showDatePicker by remember {
         mutableStateOf(false)
     }
@@ -81,51 +73,20 @@ fun AddTodoScreen(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "Add Todo", style = MaterialTheme.typography.titleLarge.copy(
-                            fontSize = 19.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
+            TopAppBar(
+                title = "Add Todo",
+                onCancelClick = {
+                    keyboard?.hide()
+                    navController.navigateUp()
                 },
-                navigationIcon = {
-                    TextButton(
-                        onClick = {
-                            navController.navigateUp()
-                        }
-                    ) {
-                        Text(
-                            text = "Cancel",
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                fontSize = 16.sp,
-                            ),
-                        )
+                onSaveClick = {
+                    scope.launch {
+                        keyboard?.hide()
+                        viewModel.onEvent(AddTodoScreenEvent.SaveButtonClicked)
+                        navController.navigateUp()
                     }
                 },
-                actions = {
-                    TextButton(
-                        onClick = {
-                            scope.launch {
-                                viewModel.onEvent(AddTodoScreenEvent.SaveButtonClicked)
-                                navController.navigateUp()
-                            }
-                        },
-                        enabled = title.isNotEmpty()
-                    ) {
-                        Text(
-                            text = "Save",
-                            style = MaterialTheme.typography.titleSmall
-                                .copy(
-                                    fontSize = 16.sp,
-                                )
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                isEnableSave = title.isNotEmpty()
             )
         },
         modifier = Modifier
@@ -272,17 +233,10 @@ fun AddTodoScreen(
                             .fillMaxWidth(),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             cursorColor = Color.Black,
-                            focusedContainerColor = Color.Transparent,
                             disabledTextColor = MaterialTheme.colorScheme.onSurface
                         ),
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next
-                        ),
-                        singleLine = true,
                         trailingIcon = {
                             IconButton(
                                 onClick = {
@@ -337,43 +291,4 @@ fun AddTodoScreen(
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyDatePickerDialog(
-    onDateSelected: (Date) -> Unit,
-    onDismiss: () -> Unit
-) {
-    val datePickerState = rememberDatePickerState()
-
-    DatePickerDialog(
-        onDismissRequest = { onDismiss() },
-        confirmButton = {
-            Button(onClick = {
-                onDateSelected(Date(datePickerState.selectedDateMillis!!))
-                onDismiss()
-            }
-
-            ) {
-                Text(text = "OK")
-            }
-        },
-        dismissButton = {
-            Button(onClick = {
-                onDismiss()
-            }) {
-                Text(text = "Cancel")
-            }
-        }
-    ) {
-        DatePicker(
-            state = datePickerState
-        )
-    }
-}
-
-private fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("dd/MM/yyyy")
-    return formatter.format(Date(millis))
 }

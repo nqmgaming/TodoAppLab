@@ -3,7 +3,7 @@ package com.nqmgaming.todoapplab.presentation.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nqmgaming.todoapplab.core.utils.Resources
+import com.nqmgaming.todoapplab.domain.utils.Resources
 import com.nqmgaming.todoapplab.domain.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

@@ -2,7 +2,7 @@ package com.nqmgaming.todoapplab.data.repository
 
 import android.util.Log
 import androidx.room.withTransaction
-import com.nqmgaming.todoapplab.core.utils.Resources
+import com.nqmgaming.todoapplab.domain.utils.Resources
 import com.nqmgaming.todoapplab.data.local.TodoDao
 import com.nqmgaming.todoapplab.data.local.TodoDatabase
 import com.nqmgaming.todoapplab.data.mapper.toDomain
