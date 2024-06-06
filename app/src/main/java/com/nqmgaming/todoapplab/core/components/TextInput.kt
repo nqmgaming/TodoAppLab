@@ -1,5 +1,6 @@
 package com.nqmgaming.todoapplab.core.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,7 +20,11 @@ fun TextInput(
     oneLine: Boolean,
     maxLine: Int = 1,
     placeholder: String,
-    keyboardOptions: KeyboardOptions
+    keyboardOptions: KeyboardOptions,
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null
 ) {
 
     TextField(
@@ -30,7 +35,8 @@ fun TextInput(
         placeholder = { Text(text = placeholder) },
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 10.dp)
+            .clickable { onClick?.invoke() },
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Color.Gray,
@@ -39,7 +45,9 @@ fun TextInput(
         ),
         keyboardOptions = keyboardOptions,
         singleLine = oneLine,
-        maxLines = maxLine
+        maxLines = maxLine,
+        enabled = enabled,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon
     )
-
 }
